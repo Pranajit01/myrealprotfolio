@@ -168,8 +168,13 @@
             flex-direction: column;
             gap: 0.5rem;
             width: 100%;
-            max-width: 320px;
+            max-width: 100%;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @media (min-width: 1024px) {
+            .glass-stat-card {
+                max-width: 320px;
+            }
         }
         .glass-stat-card:hover {
             background: rgba(255, 255, 255, 0.08);
@@ -197,12 +202,16 @@
 
         /* 3D Transform Window */
         .mockup-window-container {
-            transform: perspective(1000px) rotateY(-8deg) rotateX(4deg) rotateZ(3deg);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .mockup-window-container:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) rotateZ(0deg) scale(1.03);
-            border-color: rgba(52, 211, 153, 0.3);
+        @media (min-width: 1024px) {
+            .mockup-window-container {
+                transform: perspective(1000px) rotateY(-8deg) rotateX(4deg) rotateZ(3deg);
+            }
+            .mockup-window-container:hover {
+                transform: perspective(1000px) rotateY(0deg) rotateX(0deg) rotateZ(0deg) scale(1.03);
+                border-color: rgba(52, 211, 153, 0.3);
+            }
         }
 
         @keyframes bounceTag {
@@ -278,32 +287,56 @@
 
     <!-- Navigation -->
     <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl">
-        <div class="glass-nav rounded-full px-6 py-2 flex items-center justify-between">
-            <a href="#home" class="logo text-base font-bold text-white tracking-wider flex items-center gap-2">
-                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                PRANAJIT.AI
-            </a>
-            <div class="hidden sm:flex items-center gap-1">
-                <a href="#home" class="nav-link-custom active">Home</a>
-                <a href="#capabilities" class="nav-link-custom">Capabilities</a>
-                <a href="#journey" class="nav-link-custom">Journey</a>
-                <a href="#projects" class="nav-link-custom">Projects</a>
-                <a href="./resume.pdf" download="Resume-Pranajit_Das.pdf" class="nav-link-custom flex items-center gap-1.5" title="Download Resume">
+        <div id="nav-container" class="glass-nav rounded-full px-6 py-2 transition-all duration-300">
+            <div class="flex items-center justify-between w-full">
+                <a href="#home" class="logo text-base font-bold text-white tracking-wider flex items-center gap-2">
+                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                    PRANAJIT.AI
+                </a>
+                <div class="hidden sm:flex items-center gap-1">
+                    <a href="#home" class="nav-link-custom active">Home</a>
+                    <a href="#capabilities" class="nav-link-custom">Capabilities</a>
+                    <a href="#journey" class="nav-link-custom">Journey</a>
+                    <a href="#projects" class="nav-link-custom">Projects</a>
+                    <a href="./resume.pdf" download="Resume-Pranajit_Das.pdf" class="nav-link-custom flex items-center gap-1.5" title="Download Resume">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Resume
+                    </a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="#contact" class="nav-link-btn-custom hidden sm:inline-block">Contact</a>
+                    
+                    <!-- Hamburger menu toggle button -->
+                    <button id="menu-toggle" class="sm:hidden text-white focus:outline-none p-1" aria-label="Toggle Menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Links -->
+            <div id="mobile-menu" class="hidden flex-col items-center gap-3 mt-4 border-t border-white/10 pt-4 pb-2 w-full sm:hidden">
+                <a href="#home" class="nav-link-custom w-full text-center active">Home</a>
+                <a href="#capabilities" class="nav-link-custom w-full text-center">Capabilities</a>
+                <a href="#journey" class="nav-link-custom w-full text-center">Journey</a>
+                <a href="#projects" class="nav-link-custom w-full text-center">Projects</a>
+                <a href="./resume.pdf" download="Resume-Pranajit_Das.pdf" class="nav-link-custom w-full flex items-center justify-center gap-1.5" title="Download Resume">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                     Resume
                 </a>
-            </div>
-            <div>
-                <a href="#contact" class="nav-link-btn-custom">Contact</a>
+                <a href="#contact" class="nav-link-btn-custom w-full text-center mt-2 py-2">Contact</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header id="home" class="relative max-w-[1600px] mx-auto mt-4 px-4 sm:px-6">
-        <div class="relative h-[92vh] min-h-[700px] rounded-[2.5rem] overflow-hidden bg-black flex items-center px-8 sm:px-16 md:px-24">
+        <div class="relative h-auto lg:h-[92vh] min-h-0 lg:min-h-[700px] py-20 lg:py-0 rounded-[2.5rem] overflow-hidden bg-black flex items-center px-6 sm:px-16 md:px-24">
             <!-- Background Image with 60% opacity and gradient overlay -->
             <div class="absolute inset-0 bg-[url('./portfolio_hero_bg.png')] bg-cover bg-center opacity-60 z-0"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/40 via-zinc-950/70 to-zinc-950/95 z-10"></div>
@@ -332,9 +365,9 @@
                     <p class="text-zinc-400 text-base sm:text-lg font-light leading-relaxed max-w-lg mb-10">
                         Purpose-driven student building intelligent systems. First place champion of AWS Cloud Quest. Specializing in Generative AI, Large Language Models (LLMs), prompt engineering, and scalable cloud solutions.
                     </p>
-                    <div class="flex flex-wrap gap-4">
+                    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fade-in-up">
                         <!-- Interactive Action Button -->
-                        <a href="mailto:daspranajit973@gmail.com" class="action-button group">
+                        <a href="mailto:daspranajit973@gmail.com" class="action-button group w-full sm:w-auto">
                             <span>Contact Me</span>
                             <div class="icon-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -343,14 +376,14 @@
                             </div>
                         </a>
                         
-                        <a href="./resume.pdf" download="Resume-Pranajit_Das.pdf" class="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full border border-white/20 text-white font-medium hover:bg-white/10 hover:border-white/40 transition duration-300">
+                        <a href="./resume.pdf" download="Resume-Pranajit_Das.pdf" class="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full border border-white/20 text-white font-medium hover:bg-white/10 hover:border-white/40 transition duration-300 w-full sm:w-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
                             <span>Download Resume</span>
                         </a>
-
-                        <a href="https://github.com/Pranajit01" target="_blank" class="inline-flex items-center justify-center px-8 py-4 rounded-full border border-white/20 text-white font-medium hover:bg-white/10 hover:border-white/40 transition duration-300">
+ 
+                        <a href="https://github.com/Pranajit01" target="_blank" class="inline-flex items-center justify-center px-8 py-4 rounded-full border border-white/20 text-white font-medium hover:bg-white/10 hover:border-white/40 transition duration-300 w-full sm:w-auto">
                             View GitHub
                         </a>
                     </div>
@@ -491,8 +524,8 @@
                         <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(52,211,153,0.15),transparent_60%)]"></div>
                         
                         <!-- Premium Custom SVG Radar Chart (Interactive-look, crisp) -->
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-4 pb-32">
-                            <svg class="w-full max-w-[280px] aspect-square" viewBox="0 0 200 200">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-4 pb-44">
+                            <svg class="w-full max-w-[280px] aspect-square" viewBox="-30 -20 260 240">
                                 <defs>
                                     <filter id="emerald-glow" x="-20%" y="-20%" width="140%" height="140%">
                                         <feGaussianBlur stdDeviation="4" result="blur" />
@@ -524,7 +557,7 @@
                                 <text x="100" y="12" fill="rgba(255,255,255,0.7)" font-size="7" font-weight="700" text-anchor="middle" letter-spacing="0.1em">GENAI</text>
                                 <text x="184" y="68" fill="rgba(255,255,255,0.7)" font-size="7" font-weight="700" text-anchor="start" letter-spacing="0.1em">PYTHON</text>
                                 <text x="178" y="152" fill="rgba(255,255,255,0.7)" font-size="7" font-weight="700" text-anchor="start" letter-spacing="0.1em">JAVA</text>
-                                <text x="100" y="210" fill="rgba(255,255,255,0.7)" font-size="7" font-weight="700" text-anchor="middle" letter-spacing="0.1em">AWS</text>
+                                <text x="100" y="188" fill="rgba(255,255,255,0.7)" font-size="7" font-weight="700" text-anchor="middle" letter-spacing="0.1em">AWS</text>
                                 <text x="22" y="152" fill="rgba(255,255,255,0.7)" font-size="7" font-weight="700" text-anchor="end" letter-spacing="0.1em">LINUX</text>
                                 <text x="20" y="68" fill="rgba(255,255,255,0.7)" font-size="7" font-weight="700" text-anchor="end" letter-spacing="0.1em">ARCH</text>
                             </svg>
@@ -649,7 +682,7 @@
                 
                 <!-- Right Column: 3D Transformed Mock-up Window -->
                 <div class="lg:col-span-6 flex items-center justify-center p-4">
-                    <div class="mockup-window-container relative w-full max-w-[500px] aspect-[4/3] rounded-2xl bg-black border border-white/10 shadow-2xl p-6 overflow-hidden">
+                    <div class="mockup-window-container relative w-full max-w-[500px] aspect-auto md:aspect-[4/3] min-h-[220px] md:min-h-0 rounded-2xl bg-black border border-white/10 shadow-2xl p-6 pb-16 md:pb-6 overflow-hidden">
                         <!-- macOS window controls -->
                         <div class="flex items-center gap-1.5 mb-6 border-b border-white/5 pb-3">
                             <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
@@ -898,13 +931,50 @@ model = tf.keras.models.load_model(<span class="text-zinc-300">"drain_mind"</spa
         </div>
     </footer>
 
-    <!-- Scroll Spy & Nav Activation Script -->
+    <!-- Scroll Spy & Nav Activation Script + Mobile Nav Toggle -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
+            // Mobile navigation toggle logic
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navContainer = document.getElementById('nav-container');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            if (menuToggle && mobileMenu && navContainer && menuIcon) {
+                menuToggle.addEventListener('click', () => {
+                    const isOpen = !mobileMenu.classList.contains('hidden');
+                    if (isOpen) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                        navContainer.classList.add('rounded-full');
+                        navContainer.classList.remove('rounded-[2rem]');
+                        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                    } else {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenu.classList.add('flex');
+                        navContainer.classList.remove('rounded-full');
+                        navContainer.classList.add('rounded-[2rem]');
+                        menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                    }
+                });
+                
+                // Close menu when clicking a link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                        navContainer.classList.add('rounded-full');
+                        navContainer.classList.remove('rounded-[2rem]');
+                        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                    });
+                });
+            }
+
+            // Scroll reveal animation activation
             const sections = document.querySelectorAll('header[id], section[id]');
             const navLinks = document.querySelectorAll('.nav-link-custom');
 
-            // Scroll reveal animation activation
             const observerOptions = {
                 root: null,
                 threshold: 0.1,
@@ -920,9 +990,7 @@ model = tf.keras.models.load_model(<span class="text-zinc-300">"drain_mind"</spa
                 });
             }, observerOptions);
 
-            // Observe sections for scroll entry animation
             sections.forEach(section => {
-                // If it is not the home section (which animates instantly), set it up to observe
                 if (section.id !== 'home') {
                     section.classList.add('opacity-0');
                     observer.observe(section);
@@ -934,7 +1002,6 @@ model = tf.keras.models.load_model(<span class="text-zinc-300">"drain_mind"</spa
                 let current = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
                     if (pageYOffset >= (sectionTop - 180)) {
                         current = section.getAttribute('id');
                     }
