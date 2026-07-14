@@ -248,6 +248,66 @@
             animation: bounceTag 2s infinite ease-in-out;
         }
 
+        /* Journey Section Interactive Transitions */
+        .story-pane, .console-pane {
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .chapter-tab {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .chapter-tab:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .chapter-tab.active {
+            border-color: rgba(52, 211, 153, 0.3);
+            background: rgba(52, 211, 153, 0.05);
+            color: #ffffff;
+            box-shadow: 0 4px 20px -5px rgba(52, 211, 153, 0.15);
+        }
+
+        .chapter-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--color-emerald);
+            border-radius: 9999px;
+            box-shadow: 0 0 10px var(--color-emerald);
+        }
+
+        .chapter-tab span:first-child {
+            color: #71717a; /* text-zinc-500 */
+            transition: color 0.3s ease;
+        }
+
+        .chapter-tab span:last-child {
+            color: #a1a1aa; /* text-zinc-400 */
+            transition: color 0.3s ease;
+        }
+
+        .chapter-tab:hover span:first-child {
+            color: #a1a1aa; /* text-zinc-400 */
+        }
+
+        .chapter-tab:hover span:last-child {
+            color: #d4d4d8; /* text-zinc-300 */
+        }
+
+        .chapter-tab.active span:first-child {
+            color: #34d399 !important; /* text-emerald-400 */
+        }
+
+        .chapter-tab.active span:last-child {
+            color: #ffffff !important; /* text-white */
+        }
+
         /* Bento Cards */
         .bento-card {
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -769,92 +829,221 @@
                 class="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none">
             </div>
 
-            <div class="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-                <!-- Left Column: Numbered Timeline Steps -->
-                <div class="lg:col-span-6">
-                    <span class="label-spec text-emerald-400 mb-4 block">
-                        PROFESSIONAL JOURNEY
+            <!-- Content Area -->
+            <div class="relative z-20">
+                <!-- Header -->
+                <div class="mb-12 text-center">
+                    <span class="label-spec text-emerald-400 mb-3 block">
+                        PROFESSIONAL CHRONICLE
                     </span>
-                    <h2 class="text-white text-4xl sm:text-5xl font-bold tracking-tight leading-[1.05] mb-12">
-                        Milestones & Experience
+                    <h2 class="text-white text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+                        My Engineering Journey
                     </h2>
+                    <p class="text-zinc-500 text-sm font-light max-w-md mx-auto">
+                        An interactive timeline of my education, cloud achievements, hackathons, and AI deployments.
+                    </p>
+                </div>
 
-                    <div class="flex flex-col gap-6">
-                        <!-- Step 01 -->
-                        <div
-                            class="group flex gap-6 items-start p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                            <div
-                                class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-400/20 text-emerald-400 font-mono font-bold text-lg">
-                                01
-                            </div>
-                            <div>
-                                <span
-                                    class="label-spec text-emerald-400 font-bold tracking-widest text-[9px] uppercase">Virtual
-                                    AI Intern</span>
-                                <h3 class="text-white font-bold text-lg mt-1">Techno Billion AI</h3>
-                                <p class="text-zinc-500 text-xs mt-1 italic">DrainMind System (SDG 11 focus)</p>
-                                <p class="text-zinc-400 text-sm mt-3 font-light leading-relaxed">
-                                    Researched framework systems for smart city water level prediction. Synthesized
-                                    pipelines to analyze mock sensor logs, automating threshold early flood warnings.
-                                </p>
+                <!-- Navigation Tabs -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+                    <!-- Tab 1 -->
+                    <button onclick="switchChapter(1)" id="tab-ch1" class="chapter-tab active flex flex-col p-4 rounded-xl border border-white/5 bg-transparent text-left transition-all duration-300">
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider mb-1">01 / Foundation</span>
+                        <span class="font-semibold text-sm">College & Skills</span>
+                    </button>
+                    
+                    <!-- Tab 2 -->
+                    <button onclick="switchChapter(2)" id="tab-ch2" class="chapter-tab flex flex-col p-4 rounded-xl border border-white/5 bg-transparent text-left transition-all duration-300">
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider mb-1">02 / Cloud</span>
+                        <span class="font-semibold text-sm">AWS Quest Champion</span>
+                    </button>
+
+                    <!-- Tab 3 -->
+                    <button onclick="switchChapter(3)" id="tab-ch3" class="chapter-tab flex flex-col p-4 rounded-xl border border-white/5 bg-transparent text-left transition-all duration-300">
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider mb-1">03 / Crucible</span>
+                        <span class="font-semibold text-sm">Sandbox CCU (Top 30)</span>
+                    </button>
+
+                    <!-- Tab 4 -->
+                    <button onclick="switchChapter(4)" id="tab-ch4" class="chapter-tab flex flex-col p-4 rounded-xl border border-white/5 bg-transparent text-left transition-all duration-300">
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider mb-1">04 / Impact</span>
+                        <span class="font-semibold text-sm">AI Intern & DrainMind</span>
+                    </button>
+                </div>
+
+                <!-- Story details & Visuals -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                    <!-- Left Column: Narrative Content Panes -->
+                    <div class="lg:col-span-6 relative">
+                        <!-- Chapter 1 Story -->
+                        <div id="story-ch1" class="story-pane relative block opacity-100 translate-y-0 transition-all duration-500">
+                            <span class="text-xs font-semibold text-emerald-400 uppercase tracking-widest block mb-2">Techno India University</span>
+                            <h3 class="text-white text-3xl font-bold mb-4 tracking-tight leading-tight">Acquiring the Core AI & Engineering Skills</h3>
+                            <p class="text-zinc-400 text-sm sm:text-base font-light leading-relaxed mb-6">
+                                My professional path took root during my study at Techno India University. Immersing myself in data analytics, neural networks, and generative AI systems, I sought to understand how raw information could be turned into actionable predictions. Beyond textbook theory, I spent hours building robust logic gates, studying computer architecture, and mastering standard OOP languages like Python and Java.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Data Analytics</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Generative AI</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">OOP (Python/Java)</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Computer Architecture</span>
                             </div>
                         </div>
 
-                        <!-- Step 02 -->
-                        <div
-                            class="group flex gap-6 items-start p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                            <div
-                                class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 border border-white/10 text-zinc-400 font-mono font-bold text-lg">
-                                02
-                            </div>
-                            <div>
-                                <span
-                                    class="label-spec text-zinc-400 font-bold tracking-widest text-[9px] uppercase">Team
-                                    Leader</span>
-                                <h3 class="text-white font-bold text-lg mt-1">Sandbox CCU Edition 2</h3>
-                                <p class="text-zinc-500 text-xs mt-1 italic">Top 30 Team Leader (Innovation Track)</p>
-                                <p class="text-zinc-400 text-sm mt-3 font-light leading-relaxed">
-                                    Managed tasks, product timelines, and sprint outputs. Led engineering team to
-                                    successfully design and present collaborative prototypes to evaluators.
-                                </p>
+                        <!-- Chapter 2 Story -->
+                        <div id="story-ch2" class="story-pane absolute top-0 left-0 w-full opacity-0 translate-y-4 pointer-events-none transition-all duration-500">
+                            <span class="text-xs font-semibold text-emerald-400 uppercase tracking-widest block mb-2">Cloud Systems & Optimization</span>
+                            <h3 class="text-white text-3xl font-bold mb-4 tracking-tight leading-tight">AWS Architect & Cloud Quest Champion</h3>
+                            <p class="text-zinc-400 text-sm sm:text-base font-light leading-relaxed mb-6">
+                                Recognizing that modern AI models require high-performance, scalable environments, I dedicated myself to mastering cloud operations. I built, deployed, and optimized infrastructure on AWS, learning standard cloud architecture patterns and earning credentials. In the AWS Cloud Quest project, my system out-performed 250+ other developer solutions to secure the #1 rank as Champion.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">AWS Cloud Systems</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Infrastructure Optimization</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Certificates & Credentials</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Scale & Architecture</span>
                             </div>
                         </div>
 
-                        <!-- Step 03 -->
-                        <div
-                            class="group flex gap-6 items-start p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                            <div
-                                class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 border border-white/10 text-zinc-400 font-mono font-bold text-lg">
-                                03
+                        <!-- Chapter 3 Story -->
+                        <div id="story-ch3" class="story-pane absolute top-0 left-0 w-full opacity-0 translate-y-4 pointer-events-none transition-all duration-500">
+                            <span class="text-xs font-semibold text-emerald-400 uppercase tracking-widest block mb-2">Competitive Hackathons</span>
+                            <h3 class="text-white text-3xl font-bold mb-4 tracking-tight leading-tight">Leading the Top 30 Team in Sandbox CCU</h3>
+                            <p class="text-zinc-400 text-sm sm:text-base font-light leading-relaxed mb-6">
+                                Collaboration under tight deadlines is where code meets execution. I actively tested my skills in different developer events and hackathons. During the Sandbox CCU Edition 2, I served as Team Leader for a group of engineering peers. I managed sprint milestones and guided our team through technical challenges. Our rapid prototyping and coordination propelled our solution into the Top 30 teams out of hundreds of participants.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Team Leadership</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Agile Sprint Management</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Rapid Prototyping</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Hackathon Sprints</span>
                             </div>
-                            <div>
-                                <span
-                                    class="label-spec text-zinc-400 font-bold tracking-widest text-[9px] uppercase">Education</span>
-                                <h3 class="text-white font-bold text-lg mt-1">Techno India University</h3>
-                                <p class="text-zinc-500 text-xs mt-1 italic">Data Analytics & Generative AI Student</p>
-                                <p class="text-zinc-400 text-sm mt-3 font-light leading-relaxed">
-                                    Focused on data analytics pipelines, neural networks, large language models, cloud system engineering, and computer architecture fundamentals.
-                                </p>
+                        </div>
+
+                        <!-- Chapter 4 Story -->
+                        <div id="story-ch4" class="story-pane absolute top-0 left-0 w-full opacity-0 translate-y-4 pointer-events-none transition-all duration-500">
+                            <span class="text-xs font-semibold text-emerald-400 uppercase tracking-widest block mb-2">Techno Billion AI Internship</span>
+                            <h3 class="text-white text-3xl font-bold mb-4 tracking-tight leading-tight">Real-World Early-Alert Deployment (SDG 11)</h3>
+                            <p class="text-zinc-400 text-sm sm:text-base font-light leading-relaxed mb-6">
+                                Applying academic knowledge to high-stakes public safety. As a Virtual AI Intern at Techno Billion, I researched framework systems for smart city water level forecasting under SDG 11. I synthesized data pipelines to process simulated sensor log data in real-time, automating threshold checks to trigger flood risk warnings before disaster strikes.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">TensorFlow Models</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Real-Time Data Pipelines</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Smart City Tech (SDG 11)</span>
+                                <span class="px-2.5 py-1 bg-white/5 text-zinc-300 text-[10px] font-mono rounded border border-white/10">Sensor Analytics</span>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Right Column: 3D Transformed Mock-up Window -->
-                <div class="lg:col-span-6 flex items-center justify-center p-4">
-                    <div
-                        class="mockup-window-container relative w-full max-w-[500px] aspect-auto md:aspect-[4/3] min-h-[220px] md:min-h-0 rounded-2xl bg-black border border-white/10 shadow-2xl p-6 pb-16 md:pb-6 overflow-hidden">
-                        <!-- macOS window controls -->
-                        <div class="flex items-center gap-1.5 mb-6 border-b border-white/5 pb-3">
-                            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                            <span class="text-white/40 text-[10px] font-mono ml-4">sensor_pipeline.py</span>
-                        </div>
+                    <!-- Right Column: Console Terminal Swapping Panes -->
+                    <div class="lg:col-span-6 flex items-center justify-center p-4">
+                        <div class="mockup-window-container relative w-full max-w-[500px] min-h-[300px] rounded-2xl bg-black border border-white/10 shadow-2xl p-6 overflow-hidden">
+                            
+                            <!-- Console Pane 1 -->
+                            <div id="console-ch1" class="console-pane transition-all duration-500 transform translate-y-0 opacity-100 relative">
+                                <div class="flex items-center gap-1.5 mb-6 border-b border-white/5 pb-3">
+                                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                                    <span class="text-white/40 text-[10px] font-mono ml-4">academic_skills.sh</span>
+                                </div>
+                                <pre class="text-[11px] font-mono text-zinc-400 leading-relaxed overflow-x-auto whitespace-pre select-none">
+<span class="text-emerald-400">$</span> ./ingest_academic_credentials.sh
+<span class="text-zinc-500">Initializing Techno India University environment...</span>
+<span class="text-emerald-400">[OK]</span> Connected to Core Database Systems
+<span class="text-emerald-400">[OK]</span> Loaded Machine Learning Fundamentals
+<span class="text-emerald-400">[OK]</span> Loaded DSA & Computer Architecture modules
 
-                        <!-- Syntax Highlighted Code Snippet -->
-                        <pre
-                            class="text-[11px] font-mono text-zinc-400 leading-relaxed overflow-x-auto whitespace-pre select-none">
+<span class="text-zinc-300">Skills Acquired:</span>
+├── Python / Java / OOP         <span class="text-emerald-400">[100%]</span>
+├── Data Analytics Pipelines   <span class="text-emerald-400">[100%]</span>
+└── Neural Networks & GenAI     <span class="text-emerald-400">[100%]</span>
+
+<span class="text-emerald-400">System Ready. Ready for cloud deployment.</span></pre>
+                                
+                                <div class="status-bounce-tag absolute bottom-4 right-4 bg-emerald-400 text-zinc-950 font-mono text-[9px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-lg select-none">
+                                    <span class="relative flex h-2 w-2">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-950 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-zinc-950"></span>
+                                    </span>
+                                    ⚡ ACADEMICS: ENROLLED
+                                </div>
+                            </div>
+
+                            <!-- Console Pane 2 -->
+                            <div id="console-ch2" class="console-pane transition-all duration-500 transform translate-y-4 opacity-0 absolute top-0 left-0 w-full pointer-events-none">
+                                <div class="flex items-center gap-1.5 mb-6 border-b border-white/5 pb-3">
+                                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                                    <span class="text-white/40 text-[10px] font-mono ml-4">aws_cloud_quest.yaml</span>
+                                </div>
+                                <pre class="text-[11px] font-mono text-zinc-400 leading-relaxed overflow-x-auto whitespace-pre select-none">
+<span class="text-emerald-400">Resources:</span>
+  <span class="text-emerald-400">VPC:</span> CIDR_10.0.0.0_16 <span class="text-emerald-400">[DEPLOYED]</span>
+  <span class="text-emerald-400">Cluster:</span> EKS-AI-Analytics <span class="text-emerald-400">[ACTIVE]</span>
+  <span class="text-emerald-400">IAM_Role:</span> ReadWriteS3Permissions <span class="text-emerald-400">[VERIFIED]</span>
+
+<span class="text-zinc-300">Certificates & Achievements:</span>
+├── AWS Cloud Quest Champion
+├── Outperformed 250+ participants
+└── AWS Architect Framework Verified
+
+<span class="text-emerald-400">Status: AWS Cloud Quest Champion // RANK #1</span>
+
+<span class="text-emerald-400">$</span> aws ec2 describe-instances --filter "Name=quest,Value=winner"</pre>
+                                
+                                <div class="status-bounce-tag absolute bottom-4 right-4 bg-emerald-400 text-zinc-950 font-mono text-[9px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-lg select-none">
+                                    <span class="relative flex h-2 w-2">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-950 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-zinc-950"></span>
+                                    </span>
+                                    ⚡ CLOUD: CHAMPION
+                                </div>
+                            </div>
+
+                            <!-- Console Pane 3 -->
+                            <div id="console-ch3" class="console-pane transition-all duration-500 transform translate-y-4 opacity-0 absolute top-0 left-0 w-full pointer-events-none">
+                                <div class="flex items-center gap-1.5 mb-6 border-b border-white/5 pb-3">
+                                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                                    <span class="text-white/40 text-[10px] font-mono ml-4">sandbox_ccu_sprint.json</span>
+                                </div>
+                                <pre class="text-[11px] font-mono text-zinc-400 leading-relaxed overflow-x-auto whitespace-pre select-none">
+{
+  <span class="text-emerald-400">"event"</span>: <span class="text-zinc-300">"Sandbox CCU Edition 2"</span>,
+  <span class="text-emerald-400">"role"</span>: <span class="text-zinc-300">"Team Leader (Innovation Track)"</span>,
+  <span class="text-emerald-400">"sprint_status"</span>: <span class="text-zinc-300">"Completed"</span>,
+  <span class="text-emerald-400">"deliverables"</span>: [
+    <span class="text-zinc-300">"User Journeys"</span>, <span class="text-zinc-300">"Interactive Prototypes"</span>, 
+    <span class="text-zinc-300">"High-Fidelity UI Design"</span>, <span class="text-zinc-300">"Pitch Deck"</span>
+  ],
+  <span class="text-emerald-400">"metrics"</span>: {
+    <span class="text-emerald-400">"teams_registered"</span>: <span class="text-zinc-300">"Hundreds"</span>,
+    <span class="text-emerald-400">"final_placement"</span>: <span class="text-zinc-300">"TOP 30 TEAMS"</span>
+  }
+}</pre>
+                                
+                                <div class="status-bounce-tag absolute bottom-4 right-4 bg-emerald-400 text-zinc-950 font-mono text-[9px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-lg select-none">
+                                    <span class="relative flex h-2 w-2">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-950 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-zinc-950"></span>
+                                    </span>
+                                    ⚡ TEAM: LEADER
+                                </div>
+                            </div>
+
+                            <!-- Console Pane 4 -->
+                            <div id="console-ch4" class="console-pane transition-all duration-500 transform translate-y-4 opacity-0 absolute top-0 left-0 w-full pointer-events-none">
+                                <div class="flex items-center gap-1.5 mb-6 border-b border-white/5 pb-3">
+                                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                                    <span class="text-white/40 text-[10px] font-mono ml-4">sensor_pipeline.py</span>
+                                </div>
+                                <pre class="text-[11px] font-mono text-zinc-400 leading-relaxed overflow-x-auto whitespace-pre select-none">
 <span class="text-emerald-400">import</span> tensorflow <span class="text-emerald-400">as</span> tf
 <span class="text-emerald-400">import</span> numpy <span class="text-emerald-400">as</span> np
 
@@ -867,18 +1056,17 @@ model = tf.keras.models.load_model(<span class="text-zinc-300">"drain_mind"</spa
     
     <span class="text-emerald-400">if</span> prob &gt;= <span class="text-zinc-300">0.85</span>:
         <span class="text-emerald-400">return</span> {<span class="text-zinc-300">"alert"</span>: <span class="text-zinc-300">"CRITICAL"</span>, <span class="text-zinc-300">"val"</span>: prob}
-    <span class="text-emerald-400">return</span> {<span class="text-zinc-300">"alert"</span>: <span class="text-zinc-300">"NORMAL"</span>, <span class="text-zinc-300">"val"</span>: prob}
-</pre>
+    <span class="text-emerald-400">return</span> {<span class="text-zinc-300">"alert"</span>: <span class="text-zinc-300">"NORMAL"</span>, <span class="text-zinc-300">"val"</span>: prob}</pre>
+                                
+                                <div class="status-bounce-tag absolute bottom-4 right-4 bg-emerald-400 text-zinc-950 font-mono text-[9px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-lg select-none">
+                                    <span class="relative flex h-2 w-2">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-950 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-zinc-950"></span>
+                                    </span>
+                                    ⚡ PIPELINE: ONLINE
+                                </div>
+                            </div>
 
-                        <!-- Animated bouncing status tag at bottom-right -->
-                        <div
-                            class="status-bounce-tag absolute bottom-4 right-4 bg-emerald-400 text-zinc-950 font-mono text-[9px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-lg select-none">
-                            <span class="relative flex h-2 w-2">
-                                <span
-                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-950 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-zinc-950"></span>
-                            </span>
-                            ⚡ PIPELINE: ONLINE
                         </div>
                     </div>
                 </div>
@@ -1252,6 +1440,68 @@ model = tf.keras.models.load_model(<span class="text-zinc-300">"drain_mind"</spa
 
     <!-- Scroll Spy & Nav Activation Script + Mobile Nav Toggle -->
     <script>
+        window.switchChapter = function(chapterNum) {
+            const tabs = document.querySelectorAll('.chapter-tab');
+            const stories = document.querySelectorAll('.story-pane');
+            const consoles = document.querySelectorAll('.console-pane');
+
+            // 1. Update tab active states
+            tabs.forEach(tab => {
+                const isCurrent = tab.id === `tab-ch${chapterNum}`;
+                if (isCurrent) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // 2. Transition content panes (stories & consoles)
+            const targetStory = document.getElementById(`story-ch${chapterNum}`);
+            const targetConsole = document.getElementById(`console-ch${chapterNum}`);
+
+            // Find current active relative elements
+            const activeStory = Array.from(stories).find(s => s.classList.contains('relative'));
+            const activeConsole = Array.from(consoles).find(c => c.classList.contains('relative'));
+
+            if (activeStory === targetStory) return; // Already selected
+
+            if (activeStory) {
+                activeStory.classList.remove('opacity-100', 'translate-y-0');
+                activeStory.classList.add('opacity-0', 'translate-y-4');
+                
+                setTimeout(() => {
+                    activeStory.classList.remove('relative', 'block');
+                    activeStory.classList.add('absolute', 'top-0', 'left-0', 'w-full', 'pointer-events-none');
+                    
+                    targetStory.classList.remove('absolute', 'top-0', 'left-0', 'w-full', 'pointer-events-none');
+                    targetStory.classList.add('relative', 'block');
+                    
+                    targetStory.offsetHeight; // trigger reflow
+                    
+                    targetStory.classList.remove('opacity-0', 'translate-y-4');
+                    targetStory.classList.add('opacity-100', 'translate-y-0');
+                }, 400);
+            }
+
+            if (activeConsole) {
+                activeConsole.classList.remove('opacity-100', 'translate-y-0');
+                activeConsole.classList.add('opacity-0', 'translate-y-4');
+                
+                setTimeout(() => {
+                    activeConsole.classList.remove('relative');
+                    activeConsole.classList.add('absolute', 'top-0', 'left-0', 'w-full', 'pointer-events-none');
+                    
+                    targetConsole.classList.remove('absolute', 'top-0', 'left-0', 'w-full', 'pointer-events-none');
+                    targetConsole.classList.add('relative');
+                    
+                    targetConsole.offsetHeight; // trigger reflow
+                    
+                    targetConsole.classList.remove('opacity-0', 'translate-y-4');
+                    targetConsole.classList.add('opacity-100', 'translate-y-0');
+                }, 400);
+            }
+        };
+
         window.addEventListener('DOMContentLoaded', () => {
             // Mobile navigation toggle logic
             const menuToggle = document.getElementById('menu-toggle');
