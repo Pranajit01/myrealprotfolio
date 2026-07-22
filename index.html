@@ -374,18 +374,19 @@
         }
 
         /* Mobile menu transitions & Hamburger animation */
-        #mobile-menu-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
+        #mobile-menu-card {
+            transform: translateY(-10px) scale(0.96);
             opacity: 0;
             visibility: hidden;
-            transition: grid-template-rows 300ms cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 200ms ease-out,
-                        visibility 300ms;
+            transform-origin: top center;
+            will-change: transform, opacity;
+            transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 180ms ease-out,
+                        visibility 250ms;
         }
 
-        #mobile-menu-wrapper.open {
-            grid-template-rows: 1fr;
+        #mobile-menu-card.open {
+            transform: translateY(0) scale(1);
             opacity: 1;
             visibility: visible;
         }
@@ -404,8 +405,8 @@
             width: 100%;
             background-color: currentColor;
             border-radius: 9999px;
-            transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 200ms ease-out;
+            transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 180ms ease-out;
         }
 
         #menu-toggle.open .line1 {
@@ -423,24 +424,25 @@
 
         #mobile-menu a {
             opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 150ms ease,
-                        transform 150ms ease;
+            transform: translateY(-8px);
+            will-change: transform, opacity;
+            transition: opacity 120ms ease,
+                        transform 120ms ease;
         }
 
-        #mobile-menu-wrapper.open #mobile-menu a {
+        #mobile-menu-card.open #mobile-menu a {
             opacity: 1;
             transform: translateY(0);
-            transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        #mobile-menu-wrapper.open #mobile-menu a:nth-child(1) { transition-delay: 40ms; }
-        #mobile-menu-wrapper.open #mobile-menu a:nth-child(2) { transition-delay: 80ms; }
-        #mobile-menu-wrapper.open #mobile-menu a:nth-child(3) { transition-delay: 120ms; }
-        #mobile-menu-wrapper.open #mobile-menu a:nth-child(4) { transition-delay: 160ms; }
-        #mobile-menu-wrapper.open #mobile-menu a:nth-child(5) { transition-delay: 200ms; }
-        #mobile-menu-wrapper.open #mobile-menu a:nth-child(6) { transition-delay: 240ms; }
+        #mobile-menu-card.open #mobile-menu a:nth-child(1) { transition-delay: 30ms; }
+        #mobile-menu-card.open #mobile-menu a:nth-child(2) { transition-delay: 60ms; }
+        #mobile-menu-card.open #mobile-menu a:nth-child(3) { transition-delay: 90ms; }
+        #mobile-menu-card.open #mobile-menu a:nth-child(4) { transition-delay: 120ms; }
+        #mobile-menu-card.open #mobile-menu a:nth-child(5) { transition-delay: 150ms; }
+        #mobile-menu-card.open #mobile-menu a:nth-child(6) { transition-delay: 180ms; }
     </style>
 </head>
 
@@ -450,8 +452,8 @@
     <div class="noise-overlay"></div>
 
     <!-- Navigation -->
-    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl">
-        <div id="nav-container" class="glass-nav rounded-full px-6 py-2 transition-[border-radius] duration-300 ease-out">
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl flex flex-col gap-2.5">
+        <div id="nav-container" class="glass-nav rounded-full px-6 py-2 w-full">
             <div class="flex items-center justify-between w-full">
                 <a href="#home" class="logo text-base font-bold text-white tracking-wider flex items-center gap-2">
                     <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
@@ -486,27 +488,25 @@
                     </button>
                 </div>
             </div>
+        </div>
 
-            <!-- Mobile Menu Wrapper (Grid container for smooth height transition) -->
-            <div id="mobile-menu-wrapper" class="sm:hidden w-full overflow-hidden">
-                <div class="min-h-0">
-                    <div id="mobile-menu" class="flex flex-col items-center gap-3 mt-4 border-t border-white/10 pt-4 pb-2 w-full">
-                        <a href="#home" class="nav-link-custom w-full text-center active">Home</a>
-                        <a href="#capabilities" class="nav-link-custom w-full text-center">Capabilities</a>
-                        <a href="#journey" class="nav-link-custom w-full text-center">Journey</a>
-                        <a href="#projects" class="nav-link-custom w-full text-center">Projects</a>
-                        <a href="./resume.pdf" download="Resume-Pranajit_Das.pdf"
-                            class="nav-link-custom w-full flex items-center justify-center gap-1.5" title="Download Resume">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                            </svg>
-                            Resume
-                        </a>
-                        <a href="#contact" class="nav-link-btn-custom w-full text-center mt-2 py-2">Contact</a>
-                    </div>
-                </div>
+        <!-- Mobile Menu Card (Separate for GPU performance) -->
+        <div id="mobile-menu-card" class="glass-nav rounded-[2rem] px-6 py-6 w-full sm:hidden">
+            <div id="mobile-menu" class="flex flex-col items-center gap-3.5 w-full">
+                <a href="#home" class="nav-link-custom w-full text-center active">Home</a>
+                <a href="#capabilities" class="nav-link-custom w-full text-center">Capabilities</a>
+                <a href="#journey" class="nav-link-custom w-full text-center">Journey</a>
+                <a href="#projects" class="nav-link-custom w-full text-center">Projects</a>
+                <a href="./resume.pdf" download="Resume-Pranajit_Das.pdf"
+                    class="nav-link-custom w-full flex items-center justify-center gap-1.5" title="Download Resume">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Resume
+                </a>
+                <a href="#contact" class="nav-link-btn-custom w-full text-center mt-2 py-2">Contact</a>
             </div>
         </div>
     </nav>
@@ -1630,24 +1630,20 @@ model = tf.keras.models.load_model(<span class="text-zinc-300">"drain_mind"</spa
         window.addEventListener('DOMContentLoaded', () => {
             // Mobile navigation toggle logic
             const menuToggle = document.getElementById('menu-toggle');
-            const mobileMenuWrapper = document.getElementById('mobile-menu-wrapper');
+            const mobileMenuCard = document.getElementById('mobile-menu-card');
             const navContainer = document.getElementById('nav-container');
 
-            if (menuToggle && mobileMenuWrapper && navContainer) {
+            if (menuToggle && mobileMenuCard && navContainer) {
                 const toggleMenu = (forceClose = false) => {
-                    const isClosed = !mobileMenuWrapper.classList.contains('open');
+                    const isClosed = !mobileMenuCard.classList.contains('open');
                     const shouldOpen = !forceClose && isClosed;
 
                     if (shouldOpen) {
-                        mobileMenuWrapper.classList.add('open');
+                        mobileMenuCard.classList.add('open');
                         menuToggle.classList.add('open');
-                        navContainer.classList.remove('rounded-full');
-                        navContainer.classList.add('rounded-[2rem]');
                     } else {
-                        mobileMenuWrapper.classList.remove('open');
+                        mobileMenuCard.classList.remove('open');
                         menuToggle.classList.remove('open');
-                        navContainer.classList.add('rounded-full');
-                        navContainer.classList.remove('rounded-[2rem]');
                     }
                 };
 
@@ -1657,15 +1653,15 @@ model = tf.keras.models.load_model(<span class="text-zinc-300">"drain_mind"</spa
                 });
 
                 // Close menu when clicking a link
-                const mobileLinks = mobileMenuWrapper.querySelectorAll('a');
+                const mobileLinks = mobileMenuCard.querySelectorAll('a');
                 mobileLinks.forEach(link => {
                     link.addEventListener('click', () => toggleMenu(true));
                 });
 
                 // Close menu when clicking outside
                 document.addEventListener('click', (e) => {
-                    const isOpen = mobileMenuWrapper.classList.contains('open');
-                    if (isOpen && !navContainer.contains(e.target)) {
+                    const isOpen = mobileMenuCard.classList.contains('open');
+                    if (isOpen && !navContainer.contains(e.target) && !mobileMenuCard.contains(e.target)) {
                         toggleMenu(true);
                     }
                 });
