@@ -372,6 +372,75 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #34d399;
         }
+
+        /* Mobile menu transitions & Hamburger animation */
+        #mobile-menu-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            visibility: hidden;
+            transition: grid-template-rows 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 200ms ease-out,
+                        visibility 300ms;
+        }
+
+        #mobile-menu-wrapper.open {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hamburger-lines {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 20px;
+            height: 14px;
+        }
+
+        .hamburger-lines .line {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: currentColor;
+            border-radius: 9999px;
+            transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 200ms ease-out;
+        }
+
+        #menu-toggle.open .line1 {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        #menu-toggle.open .line2 {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        #menu-toggle.open .line3 {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        #mobile-menu a {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 150ms ease,
+                        transform 150ms ease;
+        }
+
+        #mobile-menu-wrapper.open #mobile-menu a {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #mobile-menu-wrapper.open #mobile-menu a:nth-child(1) { transition-delay: 40ms; }
+        #mobile-menu-wrapper.open #mobile-menu a:nth-child(2) { transition-delay: 80ms; }
+        #mobile-menu-wrapper.open #mobile-menu a:nth-child(3) { transition-delay: 120ms; }
+        #mobile-menu-wrapper.open #mobile-menu a:nth-child(4) { transition-delay: 160ms; }
+        #mobile-menu-wrapper.open #mobile-menu a:nth-child(5) { transition-delay: 200ms; }
+        #mobile-menu-wrapper.open #mobile-menu a:nth-child(6) { transition-delay: 240ms; }
     </style>
 </head>
 
@@ -382,7 +451,7 @@
 
     <!-- Navigation -->
     <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl">
-        <div id="nav-container" class="glass-nav rounded-full px-6 py-2 transition-all duration-300">
+        <div id="nav-container" class="glass-nav rounded-full px-6 py-2 transition-[border-radius] duration-300 ease-out">
             <div class="flex items-center justify-between w-full">
                 <a href="#home" class="logo text-base font-bold text-white tracking-wider flex items-center gap-2">
                     <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
@@ -407,34 +476,37 @@
                     <a href="#contact" class="nav-link-btn-custom hidden sm:inline-block">Contact</a>
 
                     <!-- Hamburger menu toggle button -->
-                    <button id="menu-toggle" class="sm:hidden text-white focus:outline-none p-1"
+                    <button id="menu-toggle" class="sm:hidden text-white focus:outline-none p-2 flex items-center justify-center"
                         aria-label="Toggle Menu">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
+                        <span class="hamburger-lines">
+                            <span class="line line1"></span>
+                            <span class="line line2"></span>
+                            <span class="line line3"></span>
+                        </span>
                     </button>
                 </div>
             </div>
 
-            <!-- Mobile Menu Links -->
-            <div id="mobile-menu"
-                class="hidden flex-col items-center gap-3 mt-4 border-t border-white/10 pt-4 pb-2 w-full sm:hidden">
-                <a href="#home" class="nav-link-custom w-full text-center active">Home</a>
-                <a href="#capabilities" class="nav-link-custom w-full text-center">Capabilities</a>
-                <a href="#journey" class="nav-link-custom w-full text-center">Journey</a>
-                <a href="#projects" class="nav-link-custom w-full text-center">Projects</a>
-                <a href="./resume.pdf" download="Resume-Pranajit_Das.pdf"
-                    class="nav-link-custom w-full flex items-center justify-center gap-1.5" title="Download Resume">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    Resume
-                </a>
-                <a href="#contact" class="nav-link-btn-custom w-full text-center mt-2 py-2">Contact</a>
+            <!-- Mobile Menu Wrapper (Grid container for smooth height transition) -->
+            <div id="mobile-menu-wrapper" class="sm:hidden w-full overflow-hidden">
+                <div class="min-h-0">
+                    <div id="mobile-menu" class="flex flex-col items-center gap-3 mt-4 border-t border-white/10 pt-4 pb-2 w-full">
+                        <a href="#home" class="nav-link-custom w-full text-center active">Home</a>
+                        <a href="#capabilities" class="nav-link-custom w-full text-center">Capabilities</a>
+                        <a href="#journey" class="nav-link-custom w-full text-center">Journey</a>
+                        <a href="#projects" class="nav-link-custom w-full text-center">Projects</a>
+                        <a href="./resume.pdf" download="Resume-Pranajit_Das.pdf"
+                            class="nav-link-custom w-full flex items-center justify-center gap-1.5" title="Download Resume">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Resume
+                        </a>
+                        <a href="#contact" class="nav-link-btn-custom w-full text-center mt-2 py-2">Contact</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -1558,38 +1630,44 @@ model = tf.keras.models.load_model(<span class="text-zinc-300">"drain_mind"</spa
         window.addEventListener('DOMContentLoaded', () => {
             // Mobile navigation toggle logic
             const menuToggle = document.getElementById('menu-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuWrapper = document.getElementById('mobile-menu-wrapper');
             const navContainer = document.getElementById('nav-container');
-            const menuIcon = document.getElementById('menu-icon');
 
-            if (menuToggle && mobileMenu && navContainer && menuIcon) {
-                menuToggle.addEventListener('click', () => {
-                    const isOpen = !mobileMenu.classList.contains('hidden');
-                    if (isOpen) {
-                        mobileMenu.classList.add('hidden');
-                        mobileMenu.classList.remove('flex');
-                        navContainer.classList.add('rounded-full');
-                        navContainer.classList.remove('rounded-[2rem]');
-                        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-                    } else {
-                        mobileMenu.classList.remove('hidden');
-                        mobileMenu.classList.add('flex');
+            if (menuToggle && mobileMenuWrapper && navContainer) {
+                const toggleMenu = (forceClose = false) => {
+                    const isClosed = !mobileMenuWrapper.classList.contains('open');
+                    const shouldOpen = !forceClose && isClosed;
+
+                    if (shouldOpen) {
+                        mobileMenuWrapper.classList.add('open');
+                        menuToggle.classList.add('open');
                         navContainer.classList.remove('rounded-full');
                         navContainer.classList.add('rounded-[2rem]');
-                        menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                    } else {
+                        mobileMenuWrapper.classList.remove('open');
+                        menuToggle.classList.remove('open');
+                        navContainer.classList.add('rounded-full');
+                        navContainer.classList.remove('rounded-[2rem]');
                     }
+                };
+
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleMenu();
                 });
 
                 // Close menu when clicking a link
-                const mobileLinks = mobileMenu.querySelectorAll('a');
+                const mobileLinks = mobileMenuWrapper.querySelectorAll('a');
                 mobileLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenu.classList.add('hidden');
-                        mobileMenu.classList.remove('flex');
-                        navContainer.classList.add('rounded-full');
-                        navContainer.classList.remove('rounded-[2rem]');
-                        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-                    });
+                    link.addEventListener('click', () => toggleMenu(true));
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    const isOpen = mobileMenuWrapper.classList.contains('open');
+                    if (isOpen && !navContainer.contains(e.target)) {
+                        toggleMenu(true);
+                    }
                 });
             }
 
